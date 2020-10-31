@@ -1,0 +1,79 @@
+﻿@model List<mvcproj.Models.HomeModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<h1>Display</h1>
+<div>
+    <p><b>EMPLOYEE DETAILS</b></p>
+</div>
+<div>
+    <table style="border:5px solid blue; text-align:center;">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Mobile</th>
+            <th>Age</th>
+            <th>Projects</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Phone</td>
+                <td>@item.Age</td>
+                <td>
+                    @foreach (var project in item.Projects)
+                    {
+                        @project@:&nbsp;
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<br />
+<br />
+<h1>Add or Update</h1>
+@using (Html.BeginForm("Add", "Home", FormMethod.Post))
+{
+    mvcproj.Models.HomeModel employee = new mvcproj.Models.HomeModel();
+    <label asp-for="@employee.Id">ID : </label>
+    <input type="text" asp-for="@employee.Id" name="Id" />
+    <br />
+    <br />
+    <label asp-for="@employee.Name">Name : </label>
+    <input type="text" asp-for="@employee.Name" name="Name" />
+    <br />
+    <br />
+    <label asp-for="@employee.Phone">Phone Number : </label>
+    <input type="text" asp-for="@employee.Phone" name="Phone" />
+    <br />
+    <br />
+    <label asp-for="@employee.Age">Age : </label>
+    <input type="text" asp-for="@employee.Age" name="Age" />
+    <br />
+    <br />
+    <label>Projects :</label>
+    <br />
+    for (int i = 0; i < 3; i++)
+    {
+        <label asp-for="@employee.Projects[i]">Project @(i + 1) : </label>
+        <input type="text" asp-for="@employee.Projects[i]" name="Projects[@i]" />
+        <br />
+    }
+    <br />
+    <button type="submit">Add/Update</button>
+}
+<br />
+<br />
+<h1>Delete</h1>
+@using (Html.BeginForm("Delete", "Home", FormMethod.Post))
+{
+    mvcproj.Models.HomeModel employee = new mvcproj.Models.HomeModel();
+    <label asp-for="@employee.Id">ID : </label>
+    <input type="text" asp-for="@employee.Id" name="Id" />
+    <br />
+    <br />
+    <button type="submit" name="submit">Delete</button>
+}
